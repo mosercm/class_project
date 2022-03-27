@@ -15,12 +15,16 @@ setwd ("7")
 
 
 fredr_set_key("")
+
+# This command calls the unemployment rate from 1990 to 2000
 fredr(
   series_id = "UNRATE",
   observation_start = as.Date("1990-01-01"),
   observation_end = as.Date("2000-01-01")
 )
 
+#the next set of commands request the avaiable series with a search term. 
+#this is an easy way to find hthe series_id.
 gdp_series<-if (fredr_has_key()) {
   # search for series with text matching "gdp" and return the top 10 most popular
   # series
@@ -58,11 +62,14 @@ infl_series<-if (fredr_has_key()) {
   )
 }
 
+#################
+# now this saves the unemployment rate as a df (most recent 4 years)
 unr<-fredr(
   series_id = "UNRATE",
   observation_start = as.Date("2018-01-01"),
   observation_end = as.Date("2022-01-01")
 )
+
 lfpr<-fredr(
   series_id = "CIVPART",
   observation_start = as.Date("2018-01-01"),
