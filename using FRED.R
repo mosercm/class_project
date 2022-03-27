@@ -11,10 +11,10 @@
 install.packages("fredr")
 
 library(fredr)
-setwd ("C:/Users/chris/Desktop/Research Methods Econ6290/2022/week_7")
+setwd ("7")
 
 
-fredr_set_key("f2b62575640ea2d74a45936b7e785ace")
+fredr_set_key("")
 fredr(
   series_id = "UNRATE",
   observation_start = as.Date("1990-01-01"),
