@@ -4,23 +4,26 @@
 # 
 # automating data downloads using APIs 
 ####################################
-# Install Git https://happygitwithr.com/install-git.html
+Install Git https://happygitwithr.com/install-git.html
 # lfpr, lfpr-women, unr, unr-women, gdp
 #
 #
 install.packages("fredr")
 
 library(fredr)
-setwd ("7")
+getwd ()
+
+getwd() 
+setwd("C:/Users/Student/Desktop") 
 
 
-fredr_set_key("")
+fredr_set_key("9c21b9c871b6a01e1c6ac66c17d399c8")
 
-# This command calls the unemployment rate from 1990 to 2000
+# This command calls the  initial unemployment claims from 2018 to 2022
 fredr(
-  series_id = "UNRATE",
-  observation_start = as.Date("1990-01-01"),
-  observation_end = as.Date("2000-01-01")
+  series_id = "ICSA",
+  observation_start = as.Date("2018-01-01"),
+  observation_end = as.Date("2022-01-01")
 )
 
 #the next set of commands request the avaiable series with a search term. 
@@ -65,7 +68,7 @@ infl_series<-if (fredr_has_key()) {
 #################
 # now this saves the unemployment rate as a df (most recent 4 years)
 unr<-fredr(
-  series_id = "UNRATE",
+  series_id = "ICSA",
   observation_start = as.Date("2018-01-01"),
   observation_end = as.Date("2022-01-01")
 )
