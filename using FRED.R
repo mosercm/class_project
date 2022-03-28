@@ -11,7 +11,9 @@
 install.packages("fredr")
 
 library(fredr)
+
 setwd ("")
+
 
 
 fredr_set_key("")
