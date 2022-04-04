@@ -64,7 +64,13 @@ infl_series<-if (fredr_has_key()) {
     limit = 50
   )
 }
-
+#Using same API provided above
+or 
+fredr(
+  series_id = "UNRATE",
+  observation_start = as.Date("1990-01-01"),
+  observation_end = as.Date("2000-01-01")
+)
 #################
 # now this saves the unemployment rate as a df (most recent 4 years)
 unr<-fredr(
@@ -78,3 +84,67 @@ lfpr<-fredr(
   observation_start = as.Date("2018-01-01"),
   observation_end = as.Date("2022-01-01")
 )
+
+fredr(
+  series_id = "UNRATE",
+  observation_start = as.Date("1990-01-01"),
+  observation_end = as.Date("2000-01-01"),
+  frequency = "q", # quarterly
+  units = "chg" # change over previous value
+)
+
+
+popular_funds_series <- fredr_series_search_text(
+    search_text = "federal funds",
+    order_by = "popularity",
+    sort_order = "desc",
+    limit = 1
+)
+
+
+popular_funds_series_id <- popular_funds_series$id
+
+popular_funds_series_id %>%
+  fredr(
+    observation_start = as.Date("1990-01-01"),
+    observation_end = as.Date("2000-01-01")
+  ) %>%
+  ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series")
+
+
+library(purrr)
+
+map_dfr(c("UNRATE", "FEDFUNDS"), fredr) %>%
+  ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series")
+
+
+params <- list(
+  series_id = c("UNRATE", "OILPRICE"),
+  frequency = c("m", "q")
+)
+
+pmap_dfr(
+  .l = params,
+  .f = ~ fredr(series_id = .x, frequency = .y)
+)
+
+library(xts)
+
+gnpca <- fredr(series_id = "GNPCA", units = "log") %>%
+  mutate(value = value - lag(value)) %>%
+  filter(!is.na(value))
+
+gnpca_xts <- xts(
+  x = gnpca$value,
+  order.by = gnpca$date
+)
+
+gnpca_xts %>%
+  StructTS() %>%
+  residuals() %>%
+  acf(., main = "ACF for First Differenced real US GNP, log")
+
