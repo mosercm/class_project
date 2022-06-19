@@ -5,23 +5,17 @@
 # automating data downloads using APIs 
 ####################################
 # Install Git https://happygitwithr.com/install-git.html
-# lfpr, lfpr-women, unr, unr-women, gdp
+# 
 #
-#
+
 install.packages("fredr")
 
 library(fredr)
 
-setwd ("")
-
-
 
 fredr_set_key("")
-fredr(
-  series_id = "UNRATE",
-  observation_start = as.Date("1990-01-01"),
-  observation_end = as.Date("2000-01-01")
-)
+
+##irst you can explore what data series are available
 
 gdp_series<-if (fredr_has_key()) {
   # search for series with text matching "gdp" and return the top 50 most popular
@@ -33,7 +27,7 @@ gdp_series<-if (fredr_has_key()) {
   )
 }
 unr_series<-if (fredr_has_key()) {
-  # search for series with text matching "gdp" and return the top 10 most popular
+  # search for series with text matching "unemployment rate" and return the top 10 most popular
   # series
   fredr_series_search_text(
     search_text = "unemployment rate",
@@ -42,7 +36,7 @@ unr_series<-if (fredr_has_key()) {
   )
 }
 lfpr_series<-if (fredr_has_key()) {
-  # search for series with text matching "gdp" and return the top 10 most popular
+  # search for series with text matching "participation" and return the top 10 most popular
   # series
   fredr_series_search_text(
     search_text = "participation",
@@ -60,10 +54,15 @@ infl_series<-if (fredr_has_key()) {
   )
 }
 
-# follow this example to write your own code to make a df with the most recent 
-# 4 years of LFPR.
+# Next you can access data from those series
 unr<-fredr(
   series_id = "UNRATE",
   observation_start = as.Date("2018-01-01"),
   observation_end = as.Date("2022-01-01")
 )
+
+# Create your own series and plot it on a line chart
+# with time on the x-axis.
+
+
+
