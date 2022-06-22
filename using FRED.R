@@ -36,7 +36,7 @@ unr_series<-if (fredr_has_key()) {
   )
 }
 lfpr_series<-if (fredr_has_key()) {
-  # search for series with text matching "participation" and return the top 10 most popular
+  # search for series with text matching "participation" and return the top 50 most popular
   # series
   fredr_series_search_text(
     search_text = "participation",
@@ -45,7 +45,7 @@ lfpr_series<-if (fredr_has_key()) {
   )
 }
 infl_series<-if (fredr_has_key()) {
-  # search for series with text matching "inflation" and return the top 10 most popular
+  # search for series with text matching "inflation" and return the top 50 most popular
   # series
   fredr_series_search_text(
     search_text = "inflation",
